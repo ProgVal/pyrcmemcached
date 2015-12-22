@@ -1,0 +1,3 @@
+[submodule "mammon"]
+	path = mammon
+	url = https://github.com/ProgVal/mammon.git
