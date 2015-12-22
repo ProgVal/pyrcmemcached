@@ -237,3 +237,4 @@ if __name__ == '__main__':
     assert c.get('foo') == 'bar'
     c.delete('foo')
     assert c.get('foo') is None
+    print('All tests passed.')
