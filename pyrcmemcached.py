@@ -138,7 +138,7 @@ class IrcClient:
         self.sendLine('CAP END')
         while m.command != '005': # RPL_ISUPPORT
             m = self.getMessage()
-        if 'METADATA' not in {x.split('=')[0] for x in m.params[1:]}:
+        if 'METADATA' not in {x.split('=')[0] for x in m.params[1:-1]}:
             raise Exception('Server does not support METADATA.')
 
         self.sendLine('PING')
