@@ -6,6 +6,7 @@ How to use:
 
 ```
 git clone https://github.com/ProgVal/pyrcmemcached.git
+cd pyrcmemcached/
 git submodule init
 git submodule update
 ./mammon/mammond --config mammon/mammond.yml
