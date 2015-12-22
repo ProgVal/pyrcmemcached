@@ -135,20 +135,12 @@ class IrcClient:
             else:
                 capabilities.extend(m.params[2].split(' '))
                 break
-        # TODO: check RPL_ISUPPORT instead
-        if 'metadata-notify' not in map(lambda s:s.split('=')[0], capabilities):
-            raise Exception('Server does not support METADATA.')
-        self.sendLine('CAP REQ metadata-notify')
-        m = self.getMessage()
-        while m.command == 'NOTICE':
-            m = self.getMessage()
-        assert m.command == 'CAP', m
-        assert m.params[1] == 'ACK', m
-        assert m.params[2] in ('metadata-notify', 'metadata-notify '), m
         self.sendLine('CAP END')
-        m = self.getMessage()
-        while m.command != '001':
+        while m.command != '005': # RPL_ISUPPORT
             m = self.getMessage()
+        if 'METADATA' not in {x.split('=')[0] for x in m.params[1:]}:
+            raise Exception('Server does not support METADATA.')
+
         self.sendLine('PING')
         while m.command != 'PONG':
             m = self.getMessage()
