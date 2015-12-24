@@ -30,13 +30,13 @@ def parse_message(s):
     http://ircv3.net/specs/core/message-tags-3.2.html"""
     assert s.endswith('\r\n'), 'Message does not end with CR LF'
     s = s[0:-2]
+    if s.startswith('@'):
+        (tags, s) = s.split(' ', 1)
     if ' :' in s:
         (other_tokens, trailing_param) = s.split(' :')
         tokens = list(filter(bool, other_tokens.split(' '))) + [trailing_param]
     else:
         tokens = list(filter(bool, s.split(' ')))
-    if tokens[0].startswith('@'):
-        tokens.pop(0)
     if tokens[0].startswith(':'):
         prefix = tokens.pop(0)[1:]
     else:
